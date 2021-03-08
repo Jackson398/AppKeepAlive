@@ -1,4 +1,4 @@
-package com.aite.smart.processKeepApplication;
+package com.aite.smart;
 
 import androidx.appcompat.app.AppCompatActivity;
 
