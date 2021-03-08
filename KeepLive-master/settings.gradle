@@ -1,2 +1,3 @@
+include ':smartLib'
 include ':app'
 rootProject.name = "KeepLiveApp"
