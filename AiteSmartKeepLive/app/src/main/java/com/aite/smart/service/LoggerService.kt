@@ -1,9 +1,9 @@
-package com.aite.smartlib.service
+package com.aite.smart.service
 
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
-import com.aite.smartlib.logger
+import com.aite.smart.logger
 
 open class LoggerService : Service() {
 
@@ -40,5 +40,4 @@ open class LoggerService : Service() {
         super.onDestroy()
         logger("${mClassName}调用了onDestroy")
     }
-
 }
