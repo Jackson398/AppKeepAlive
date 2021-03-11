@@ -4,6 +4,9 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 
+/**
+ * 广播类封装
+ */
 open class AbstractReceiver : BroadcastReceiver() {
 
     private var mBlock: ((context: Context?, intent: Intent?) -> Unit)? = null

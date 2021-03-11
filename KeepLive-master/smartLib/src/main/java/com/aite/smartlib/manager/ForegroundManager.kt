@@ -8,6 +8,7 @@ import com.aite.smartlib.utils.Constants.Companion.GRAY_SERVICE_ID
 import com.aite.smartlib.utils.startForegroundSafely
 import com.aite.smartlib.utils.stopForegroundSafely
 
+// 通知前台服务启动
 internal class ForegroundManager(private val mService: Service) {
     fun setServiceForeground() {
         mService.startForegroundSafely(GRAY_SERVICE_ID, Notification())

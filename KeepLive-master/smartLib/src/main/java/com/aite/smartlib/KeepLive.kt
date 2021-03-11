@@ -22,7 +22,7 @@ fun init(context: Context): Boolean {
     return UtilFunction.isMainProcess(context)
 }
 
-// 在主进程中调用。
+// 在主进程中调用
 fun startKeepLiveService() {
     val context = mContext.assertNull()
     if (UtilFunction.isMainProcess(context)) {

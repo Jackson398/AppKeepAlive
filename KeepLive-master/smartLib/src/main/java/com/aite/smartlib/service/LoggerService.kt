@@ -23,7 +23,7 @@ open class LoggerService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         logger("${mClassName}调用了onStartCommand")
-        return Service.START_STICKY
+        return Service.START_STICKY // 关键
     }
 
     override fun onBind(intent: Intent?): IBinder? {

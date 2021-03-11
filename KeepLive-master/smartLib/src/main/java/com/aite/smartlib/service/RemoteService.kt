@@ -1,6 +1,7 @@
 package com.aite.smartlib.service
 
 import android.content.Intent
+import com.aite.smartlib.logger
 import com.aite.smartlib.manager.AudioManager
 import com.aite.smartlib.manager.ForegroundManager
 import com.aite.smartlib.manager.TimingManager
@@ -10,6 +11,9 @@ import com.aite.smartlib.utils.bindServiceSafely
 import com.aite.smartlib.utils.startServiceSafely
 import com.aite.smartlib.utils.unbindServiceSafely
 
+/**
+ * 用于保活应用的服务
+ */
 class RemoteService: LoggerService() {
     private val mForegroundManager by lazy {
         ForegroundManager(this)
@@ -40,6 +44,7 @@ class RemoteService: LoggerService() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        logger("绑定KeepLiveService")
         bindServiceSafely(Intent(this, KeepLiveService::class.java), mConn)
         return super.onStartCommand(intent, flags, startId)
     }

@@ -29,7 +29,7 @@ class KeepLiveService : LoggerService() {
         super.onCreate()
         mForegroundManager.setServiceForeground()
         mScreenManager.registerScreenReceiver()
-        startServiceSafely(mService)
+        startServiceSafely(mService) // 应用服务被kill后，该进程会执行这里将应用重启
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
