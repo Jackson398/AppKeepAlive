@@ -7,6 +7,7 @@ import android.os.IBinder
 import android.os.Message
 import com.aite.smart.*
 import com.aite.smart.manager.ForegroundManager
+import com.aite.smart.manager.TimingManager
 import com.aite.smart.utils.AbstractServiceConnection
 import com.aite.smart.utils.SystemUtil
 
@@ -14,31 +15,18 @@ import com.aite.smart.utils.SystemUtil
  * 用于保活应用的服务
  */
 class KeepLiveService : LoggerService() {
-    companion object {
-        const val DISCONNECTED_TIMEOUT = 10 * 1000L
-        const val DISCONNECTED_MSG = 1
-    }
-    private inner class InnerHandler: Handler() {
-        override fun handleMessage(msg: Message) {
-            if (msg.what == DISCONNECTED_MSG) {
-                // 网关APP被强制关闭，10s内连接还是断开状态则重启网关
-                logger("时间到，重启网关")
-                SystemUtil.restartGateway(KeepLiveApplication.getContext(), 1000)
-            }
-            super.handleMessage(msg)
-        }
-    }
-
-    private var mHandler = InnerHandler()
-
     private val connectedBlock = fun(name: ComponentName?, _: IBinder?) {
         logger("服务$name 连接上了")
-        mHandler.removeCallbacksAndMessages(null)
+        mTimingManager.stopJob()
     }
 
     private val disconnectedBlock = fun(name: ComponentName?) {
         logger("服务$name 断开了")
-        mHandler.sendEmptyMessageDelayed(DISCONNECTED_MSG, DISCONNECTED_TIMEOUT)
+        mTimingManager.startJob() // 开启一个定时任务，每隔5s就检测一次服务连接状态
+    }
+
+    private val mTimingManager by lazy {
+        TimingManager(this)
     }
 
     private val mForegroundManager by lazy {
@@ -54,7 +42,7 @@ class KeepLiveService : LoggerService() {
     private val mConn by lazy {
         AbstractServiceConnection().apply {
             onServiceConnected(connectedBlock = connectedBlock)
-            onServiceDisConnected(disconnectedBlock)
+            onServiceDisConnected(disconnectedBlock = disconnectedBlock)
         }
     }
 

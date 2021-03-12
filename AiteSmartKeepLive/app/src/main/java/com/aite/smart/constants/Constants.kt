@@ -11,6 +11,6 @@ class Constants {
         const val PENDING_INTENT_REQUEST_CODE = 100
 
         // 唤醒间隔时间
-        const val DEFAULT_WAKE_UP_INTERVAL = 2 * 60 * 1000L
+        const val DEFAULT_WAKE_UP_INTERVAL = 5 * 1000L
     }
 }

@@ -10,7 +10,7 @@ object KeepLiveInit {
 
     fun init(context: Context): Boolean {
         logger("===KeepLiveInit===")
-        mContext = context.applicationContext
+        mContext = KeepLiveApplication.getContext()
         return isMainProcess(context)
     }
 
